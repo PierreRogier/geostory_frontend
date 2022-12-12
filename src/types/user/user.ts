@@ -1,12 +1,13 @@
-export enum UserRoles {
-	ADMIN = "ADMIN",
-	EDITOR = "EDITOR",
-}
+import { DistrictModel } from "../district/district";
 
-export type UserModel = {
+export interface UserModel {
 	id: number;
 	email: string;
 	firstname: string;
 	lastname: string;
-	userRole: UserRoles;
-};
+	userRole: "Admin" | "Editor";
+}
+
+export interface UserWithDistrict extends UserModel {
+	district: DistrictModel;
+}

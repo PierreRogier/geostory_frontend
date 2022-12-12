@@ -1,12 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "styled-components";
+
+import { queryClient } from "@api/queryClient";
+import { GlobalStyle, theme } from "@styles";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
 	<React.StrictMode>
-		<App />
+		<QueryClientProvider client={queryClient}>
+			<BrowserRouter>
+				<ThemeProvider theme={theme}>
+					<GlobalStyle />
+					<App />
+					<ReactQueryDevtools initialIsOpen={false} />
+				</ThemeProvider>
+			</BrowserRouter>
+		</QueryClientProvider>
 	</React.StrictMode>
 );
 

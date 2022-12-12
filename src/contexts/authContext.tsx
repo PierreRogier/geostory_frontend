@@ -1,5 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { UserModel, DistrictModel, UserRoles } from "@types";
+import React, { createContext, useContext, useState } from "react";
+import { AxiosError } from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { UserModel, DistrictModel } from "@types";
+import { authenticateUser, AuthKeys } from "@api/queries";
 
 interface AuthContextInterface {
 	user: UserModel | null;
@@ -31,24 +34,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [district, setDistrict] = useState<DistrictModel | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
-	const fakeFetch = () => {
-		setIsLoading(false);
-		setUser({
-			id: 1,
-			email: "user1@gmail.com",
-			firstname: "pierre",
-			lastname: "rogier",
-			userRole: UserRoles.ADMIN,
-		});
-		setIsAuthenticated(true);
-		setDistrict({ id: 1, districtName: "Yvelines", zip_code: "78" });
-	};
-
-	useEffect(() => {
-		setTimeout(() => {
-			fakeFetch();
-		}, 3000);
-	}, []);
+	useQuery({
+		queryKey: AuthKeys.AUTHENTICATE,
+		queryFn: authenticateUser,
+		onSuccess: (data) => {
+			const { district, ...user } = data;
+			setIsLoading(false);
+			setUser(user);
+			setIsAuthenticated(true);
+			setDistrict(district);
+		},
+		onError: (err: AxiosError) => {
+			setIsLoading(false);
+		},
+		retry: false,
+	});
 
 	return (
 		<AuthContext.Provider
