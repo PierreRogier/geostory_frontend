@@ -11,6 +11,7 @@ module.exports = {
 			"@styles": path.resolve(__dirname, "src/styles"),
 			"@types": path.resolve(__dirname, "src/types"),
 			"@utils": path.resolve(__dirname, "src/utils"),
+			"@validation": path.resolve(__dirname, "src/validation"),
 			"@views": path.resolve(__dirname, "src/views"),
 		},
 	},

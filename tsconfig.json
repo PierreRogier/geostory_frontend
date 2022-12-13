@@ -10,6 +10,7 @@
 			"@styles": ["styles"],
 			"@types": ["types"],
 			"@utils": ["utils"],
+			"@validation": ["validation"],
 			"@views": ["views"]
 		},
 		"target": "es5",

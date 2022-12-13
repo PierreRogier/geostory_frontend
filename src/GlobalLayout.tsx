@@ -8,6 +8,7 @@ const GlobalDiv = styled.div`
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	color: ${({ theme }) => theme.colors.base[700]};
 `;
 
 interface GlobalLayoutProps {
